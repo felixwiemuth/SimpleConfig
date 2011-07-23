@@ -18,10 +18,7 @@ class myClass
     public:
         myClass() : config("settings.conf")
         {
-            myIval = 11;
-            myBval = true;
-            mySval = "Hello World!";
-            //load_save();
+            load_save();
         }
         ~myClass()
         {
@@ -29,11 +26,18 @@ class myClass
         }
         void load_save(bool save=false)
         {
-            cout << "Saving" << endl;
-//          TEMPLATE: config.load_save(/* myData */, save);
             config.load_save(myIval, save);
             config.load_save(myBval, save);
             config.load_save(mySval, save);
+        }
+        void print()
+        {
+            cout << "myIval: " << myIval << "\nmySval: " << mySval << endl << "myBval: ";
+            if (myBval)
+                cout << "TRUE";
+            else
+                cout << "FALSE";
+            cout << std::endl;
         }
 };
 
@@ -42,6 +46,7 @@ int main()
 {
     //Creat object of type 'myClass' to demonstrate saving
     myClass test; //save at destruction
+    test.print();
 
     return 0;
 }

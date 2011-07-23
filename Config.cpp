@@ -25,14 +25,21 @@ bool Config::set_status(Status s)
                 file.open(path, ios::out | ios::trunc);
             //check if valid
             if (!file.is_open())
+            {
+                status = READY;
                 return false;
+            }
             file.clear(); //reset status flags
         }
+        status = s; //update status flag
     }
     else
     {
         if (!file.good())
+        {
+            status = READY;
             return false;
+        }
     }
     return true;
 }

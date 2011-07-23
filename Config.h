@@ -1,6 +1,8 @@
 #ifndef CONFIG_H_INCLUDED
 #define CONFIG_H_INCLUDED
 
+#include "Config_templates.h"
+
 #include <fstream>
 #include <sstream>
 
@@ -9,13 +11,13 @@ class Config
     public:
         Config(const char* path, const char seperator='\n');
         ~Config();
-    public:
+    private:
         const char* path;
         const char seperator;
         std::fstream file;
         enum Status {READY, LOAD, SAVE} status; // READY = waiting(file closed) LOAD = loading (file opened) SAVE = saving (file opened)
     public:
-        bool set_status(Status s);
+        bool set_status(Status s); //set the status of the filestream or check if file stillt is 'good()' if the chosen status is already set
 
         template<typename T>
         bool load_save(T& data, bool save=false)
@@ -30,21 +32,11 @@ class Config
             {
                 if (!set_status(LOAD))
                     return false;
-                std::stringbuf in;
-                std::stringstream in2;
-                while (file.good())
-                {
-                    file.get(in, seperator);
-                    try
-                    {
-                        std::stringstream in2(in.str());
-                        in2 >> data;
-                    }
-                    catch(std::ios_base::failure&) //error
-                    {
-                        continue;
-                    }
-                }
+                std::string in;
+                if (!std::getline(file, in, seperator))
+                    return false;
+                if (!extract(in, data))
+                    return false;
             }
         }
 };
