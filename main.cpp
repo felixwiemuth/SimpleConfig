@@ -13,6 +13,7 @@ class myClass
         //myData
         int myIval;
         bool myBval;
+        float myFval;
         std::string mySval;
 
     public:
@@ -28,25 +29,45 @@ class myClass
         {
             config.load_save(myIval, save);
             config.load_save(myBval, save);
+            config.load_save(myFval, save);
             config.load_save(mySval, save);
+        }
+        void set_vars()
+        {
+            myIval = 16;
+            myBval = true;
+            myFval = 0.999;
+            mySval = "New String";
         }
         void print()
         {
-            cout << "myIval: " << myIval << "\nmySval: " << mySval << endl << "myBval: ";
+            cout << "myIval: " << myIval
+                 << "\nmySval: " << mySval
+                 << "\nmyFval: " << myFval
+                 << endl << "myBval: ";
             if (myBval)
                 cout << "TRUE";
             else
                 cout << "FALSE";
-            cout << std::endl;
+            cout << "\n" << std::endl;
         }
 };
 
 
 int main()
 {
-    //Creat object of type 'myClass' to demonstrate saving
-    myClass test; //save at destruction
-    test.print();
+    //Creat objects of type 'myClass' to demonstrate loading/saving
+    myClass* test = new myClass(); //save at destruction
+    cout << "--- LOADED ---" << endl;
+    test->print();
+    test->set_vars();
+    cout << "--- CHANGED ---" << endl;
+    test->print();
+    delete test;
+    test = new myClass();
+    cout << "--- NEW OBJECT ---" << endl;
+    test->print();
+    delete test;
 
     return 0;
 }
