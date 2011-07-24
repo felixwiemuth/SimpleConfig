@@ -15,16 +15,15 @@ bool Config::set_status(Status s)
 {
     if (s != status) //check if 's' is not already set
     {
-        if (s == READY)
-            file.close();
-        else
+        file.close(); //if the status changed the file has to be either closed or closed and reopened
+        if (s != READY) //'s == LOAD || SAVE' so reopen
         {
             if (s == LOAD)
                 file.open(path, ios::in);
             else // s == SAVE
                 file.open(path, ios::out | ios::trunc);
             //check if valid
-            if (!file.is_open())
+            if (!file || !file.is_open())
             {
                 status = READY;
                 return false;
@@ -35,7 +34,7 @@ bool Config::set_status(Status s)
     }
     else
     {
-        if (!file.good())
+        if (!file)
         {
             status = READY;
             return false;
