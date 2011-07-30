@@ -11,6 +11,16 @@ Config::~Config()
     set_status(READY); //close file if necessary
 }
 
+void Config::set_save_mode_formatted()
+{
+    binary = false;
+}
+
+void Config::set_save_mode_binary()
+{
+    binary = true;
+}
+
 bool Config::set_status(Status s)
 {
     if (s != status) //check if 's' is not already set

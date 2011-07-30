@@ -12,11 +12,15 @@ class Config
         Config(const char* path, const char seperator='\n');
         ~Config();
     private:
-        const char* path;
-        const char seperator;
-        std::fstream file;
+        const char* path; //path to config file
+        const char seperator; //character to seperate entries in formatted mode
+        std::fstream file; //file stream that is used to load and save
+        bool binary; //'false': content of variables (operator '>>' must be implemented by the type) are written formatted into the file -- 'true': memory fields are written to file directly -- Note: to load correctly, the mode has to be set the way it was when saving!
         enum Status {READY, LOAD, SAVE} status; // READY = waiting(file closed) LOAD = loading (file opened) SAVE = saving (file opened)
     public:
+        void set_save_mode_formatted(); //set 'binary=false'
+        void set_save_mode_binary(); //set 'binary=true'
+
         template<typename T>
         bool load_save(T& data, bool save=false)
         {
