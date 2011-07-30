@@ -17,8 +17,6 @@ class Config
         std::fstream file;
         enum Status {READY, LOAD, SAVE} status; // READY = waiting(file closed) LOAD = loading (file opened) SAVE = saving (file opened)
     public:
-        bool set_status(Status s); //set the status of the filestream or check if file stillt is 'good()' if the chosen status is already set
-
         template<typename T>
         bool load_save(T& data, bool save=false)
         {
@@ -39,6 +37,8 @@ class Config
                     return false;
             }
         }
+    private:
+        bool set_status(Status s); //set the status of the filestream or check if file stillt is 'good()' if the chosen status is already set
 };
 
 #endif // CONFIG_H_INCLUDED
