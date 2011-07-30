@@ -1,0 +1,16 @@
+SimpleConfig - Copyright (C) 2011 by Felix Wiemuth
+==================================================
+Version 0.x.x Alpha
+
+---------
+ License
+---------
+
+GNU GENERAL PUBLIC LICENSE http://www.gnu.org/licenses/gpl.txt
+
+
+-------------
+ Description
+-------------
+
+A C++ class to simply load and save configs by passing variables to an "Config" object.
