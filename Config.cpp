@@ -11,14 +11,13 @@ Config::~Config()
     set_status(READY); //close file if necessary
 }
 
-void Config::set_save_mode_formatted()
+void Config::set_binary(bool b)
 {
-    binary = false;
-}
-
-void Config::set_save_mode_binary()
-{
-    binary = true;
+    if (binary != b)
+    {
+        binary = b;
+        set_status(READY); //file must be reopened in the other mode if it was opened before
+    }
 }
 
 bool Config::set_status(Status s)

@@ -18,8 +18,7 @@ class Config
         bool binary; //'false': content of variables (operator '>>' must be implemented by the type) are written formatted into the file -- 'true': memory fields are written to file directly -- Note: to load correctly, the mode has to be set the way it was when saving!
         enum Status {READY, LOAD, SAVE} status; // READY = waiting(file closed) LOAD = loading (file opened) SAVE = saving (file opened)
     public:
-        void set_save_mode_formatted(); //set 'binary=false'
-        void set_save_mode_binary(); //set 'binary=true'
+        void set_binary(bool b=true); //set save/load mode to binary('true') or formatted('false')
 
         template<typename T>
         bool load_save(T& data, bool save=false)
