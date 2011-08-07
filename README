@@ -16,8 +16,8 @@ GNU GENERAL PUBLIC LICENSE http://www.gnu.org/licenses/gpl.txt
 A C++ class to simply load and save configs by passing variables to an "Config" object.
 
 
------------
+----------
  Examples
------------
+----------
 
 File "main.cpp" demonstrates how to use SimpleConfig.
