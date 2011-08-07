@@ -53,9 +53,11 @@ bool Config::set_status(Status s)
     }
     else
     {
+        if (status == READY)
+            return true;
         if (!file)
         {
-            status = READY;
+            set_status(READY);
             return false;
         }
     }
