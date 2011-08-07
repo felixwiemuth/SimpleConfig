@@ -1,3 +1,27 @@
+/*
+    This is a demonstration on how to use SimpleConfig.
+    Note the "(!)" signs to test different things.
+
+    ATTENTION: Be careful when using the binary save mode.
+    In binary mode, the memory fields are written to the file as they are
+    and the variables are loaded with that much data from the file as their size allows.
+    So watch out that you do not load/save data that is or includes actually pointers etc.
+    (For example, you cannot simply load/save the type "std::string"
+     because it is a complex type that includes pointers, so you would actually save
+     adresses instead of data!).
+
+    GENERAL ADVISE: Always load the same variables in the same order as they were saved.
+    Otherwise you can quickly mess up all your data. To avoid making errors SimpleConfig
+    is designed in a way that it is enough to define one function to load AND save your data.
+    See the example class below to understand how this is meant.
+
+    The main point of this test routine is first to create a class object in the main() function
+    (what as a result loads data from the file), then change the loaded variables and destroy the object again
+    (what as a result saves data to the file). Afterwards a new object is created to load the previously
+    saved data again.
+*/
+
+
 #include <iostream>
 
 #include "Config.h"
@@ -19,7 +43,8 @@ class myClass
     public:
         myClass() : config("settings.conf")
         {
-            load_save();
+            config.set_binary(); // (!) comment out to test formatted mode
+            load_save(); // (!) comment out on first run to create a file!
         }
         ~myClass()
         {
@@ -30,14 +55,14 @@ class myClass
             config.load_save(myIval, save);
             config.load_save(myBval, save);
             config.load_save(myFval, save);
-            config.load_save(mySval, save);
+            //config.load_save(mySval, save); // (!) uncomment to test formatted mode
         }
         void set_vars()
         {
-            myIval = 16;
+            myIval = 266;
             myBval = true;
-            myFval = 0.999;
-            mySval = "New String";
+            myFval = 0.987;
+            mySval = "Binary test is this. ok. SECOND CHANGED ;)";
         }
         void print()
         {
@@ -57,7 +82,7 @@ class myClass
 int main()
 {
     //Creat objects of type 'myClass' to demonstrate loading/saving
-    myClass* test = new myClass(); //save at destruction
+    myClass* test = new myClass();
     cout << "--- LOADED ---" << endl;
     test->print();
     test->set_vars();
