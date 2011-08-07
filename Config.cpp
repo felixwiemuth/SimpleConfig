@@ -28,9 +28,19 @@ bool Config::set_status(Status s)
         if (s != READY) //'s == LOAD || SAVE' so reopen
         {
             if (s == LOAD)
-                file.open(path, ios::in);
+            {
+                if (binary)
+                    file.open(path, ios::in | ios::binary);
+                else
+                    file.open(path, ios::in);
+            }
             else // s == SAVE
-                file.open(path, ios::out | ios::trunc);
+            {
+                if (binary)
+                    file.open(path, ios::out | ios::trunc | ios::binary);
+                else
+                    file.open(path, ios::out | ios::trunc);
+            }
             //check if valid
             if (!file || !file.is_open())
             {

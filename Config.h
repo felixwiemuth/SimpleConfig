@@ -21,23 +21,37 @@ class Config
         void set_binary(bool b=true); //set save/load mode to binary('true') or formatted('false')
 
         template<typename T>
-        bool load_save(T& data, bool save=false)
+        bool load_save(T& data, bool save=false) //TODO specialize for 'binary==true'
         {
             if (save)
             {
                 if (!set_status(SAVE))
                     return false;
-                file << data << seperator;
+                if (binary)
+                {
+
+                }
+                else
+                {
+                    file << data << seperator;
+                }
             }
             else //load
             {
                 if (!set_status(LOAD))
                     return false;
-                std::string in;
-                if (!std::getline(file, in, seperator))
-                    return false;
-                if (!extract(in, data))
-                    return false;
+                if (binary)
+                {
+
+                }
+                else
+                {
+                    std::string in;
+                    if (!std::getline(file, in, seperator))
+                        return false;
+                    if (!extract(in, data))
+                        return false;
+                }
             }
         }
     private:
