@@ -1,3 +1,6 @@
+/* Copyright (C) 2011 by Felix Wiemuth
+   This code is licensed under the GNU GENERAL PUBLIC LICENSE http://www.gnu.org/licenses/gpl.txt */
+
 /*
     This is a demonstration on how to use SimpleConfig.
     Note the "(!)" signs to test different things.
