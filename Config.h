@@ -29,7 +29,7 @@ class Config
                     return false;
                 if (binary)
                 {
-
+                    file.write((char*)&data, sizeof(data));
                 }
                 else
                 {
@@ -42,7 +42,7 @@ class Config
                     return false;
                 if (binary)
                 {
-
+                    file.read((char*)&data, sizeof(data));
                 }
                 else
                 {
