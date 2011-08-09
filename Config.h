@@ -20,9 +20,11 @@ class Config
         std::fstream file; //file stream that is used to load and save
         bool binary; //'false': content of variables (operator '>>' must be implemented by the type) are written formatted into the file -- 'true': memory fields are written to file directly -- Note: to load correctly, the mode has to be set the way it was when saving!
         enum Status {READY, LOAD, SAVE} status; // READY = waiting(file closed) LOAD = loading (file opened) SAVE = saving (file opened)
+        struct Failure {enum Type {NONE, FILE_OPEN_FAIL, FILE_EOF} type;} failure;
     public:
         void set_binary(bool b=true); //set save/load mode to binary('true') or formatted('false')
         void change_file(const char* path, bool binary=false); //change current file to load/save to 'path'
+        Failure::Type get_failure(); //return type of last failure
 
         template<typename T>
         bool load_save(T& data, bool save=false) //TODO specialize for 'binary==true'

@@ -7,6 +7,7 @@ using namespace std;
 
 Config::Config(const char* path, bool binary, const char seperator) : seperator(seperator)
 {
+    failure.type = Failure::NONE;
     change_file(path, binary);
 }
 
@@ -29,6 +30,11 @@ void Config::change_file(const char* path, bool binary)
     set_status(READY); //make sure current file is closed
     this->path = path;
     set_binary(binary);
+}
+
+Config::Failure::Type Config::get_failure()
+{
+    return failure.type;
 }
 
 bool Config::set_status(Status s)
