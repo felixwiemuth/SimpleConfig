@@ -5,8 +5,9 @@
 
 using namespace std;
 
-Config::Config(const char* path, const char seperator) : path(path), seperator(seperator), status(READY)
+Config::Config(const char* path, bool binary, const char seperator) : seperator(seperator)
 {
+    change_file(path, binary);
 }
 
 Config::~Config()
@@ -21,6 +22,13 @@ void Config::set_binary(bool b)
         binary = b;
         set_status(READY); //file must be reopened in the other mode if it was opened before
     }
+}
+
+void Config::change_file(const char* path, bool binary)
+{
+    set_status(READY); //make sure current file is closed
+    this->path = path;
+    set_binary(binary);
 }
 
 bool Config::set_status(Status s)

@@ -12,7 +12,7 @@
 class Config
 {
     public:
-        Config(const char* path, const char seperator='\n');
+        Config(const char* path="", bool binary=false, const char seperator='\n');
         ~Config();
     private:
         const char* path; //path to config file
@@ -22,6 +22,7 @@ class Config
         enum Status {READY, LOAD, SAVE} status; // READY = waiting(file closed) LOAD = loading (file opened) SAVE = saving (file opened)
     public:
         void set_binary(bool b=true); //set save/load mode to binary('true') or formatted('false')
+        void change_file(const char* path, bool binary=false); //change current file to load/save to 'path'
 
         template<typename T>
         bool load_save(T& data, bool save=false) //TODO specialize for 'binary==true'
