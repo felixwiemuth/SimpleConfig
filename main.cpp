@@ -97,5 +97,24 @@ int main()
     test->print();
     delete test;
 
+    //Another test
+    Config config("test.save");
+    int i = 25;
+    config.load_save(i, true);
+    i = 36;
+    config.load_save(i);
+    cout << "i: " << i << endl;
+
+    config.change_file("test2.bin", true);
+    i++;
+    config.load_save(i, true);
+
+    config.change_file("void.txt");
+
+    config.change_file("test2.bin", true);
+    int loaded;
+    config.load_save(loaded);
+    cout << "loaded: " << loaded << endl;
+
     return 0;
 }
