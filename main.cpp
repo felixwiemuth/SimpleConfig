@@ -116,5 +116,11 @@ int main()
     config.load_save(loaded);
     cout << "loaded: " << loaded << endl;
 
+    //Test exceptions
+    Config c;
+    int a, b;
+    c.load_save(a);
+    cout << "Error Code: " << c.get_failure() << endl;
+
     return 0;
 }
