@@ -11,10 +11,12 @@
 
 template <typename T> std::ostream& operator<<(Config& c, T& data)
 {
-    if (!c.file.is_open())
-        return false;
-    c.file << data << c.seperator;
-    c.file.close();
+    c.load_save(data, true);
+}
+
+template <typename T> std::ostream& operator>>(Config& c, T& data)
+{
+    c.load_save(data);
 }
 
 #endif // TEMPLATES_H_INCLUDED
