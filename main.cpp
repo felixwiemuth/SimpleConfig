@@ -28,6 +28,7 @@
 #include <iostream>
 
 #include "Config.h"
+#include "templates.h"
 
 using namespace std;
 
@@ -121,6 +122,15 @@ int main()
     int a, b;
     c.load_save(a);
     cout << "Error Code: " << c.get_failure() << endl;
+
+    //Test load/save with shift operators
+    Config myconf("test.save");
+    int x;
+    myconf >> x;
+    cout << "x: " << x << endl;
+    myconf.change_file("test_modified.save");
+    x *= 2;
+    myconf << x;
 
     return 0;
 }
