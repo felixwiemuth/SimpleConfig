@@ -121,7 +121,15 @@ int main()
     Config c;
     int a, b;
     c.load_save(a);
-    cout << "Error Code: " << c.get_failure() << endl;
+    if (!c)
+        cout << "Error Code: " << c.get_failure() << endl;
+    else
+        cout << "No error accured!" << endl;
+    c.clear();
+    if (!c)
+        cout << "Error Code: " << c.get_failure() << endl;
+    else
+        cout << "No error accured!" << endl;
 
     //Test load/save with shift operators
     Config myconf("test.save");
