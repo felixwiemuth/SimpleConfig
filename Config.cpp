@@ -32,6 +32,19 @@ void Config::change_file(const char* path, bool binary)
     set_binary(binary);
 }
 
+bool Config::check_file()
+{
+    if (file)
+        return true;
+    if (file.eof())
+        failure.type = Failure::FILE_EOF;
+    if (file.fail())
+        failure.type = Failure::FILE_FAIL;
+    if (file.bad())
+        failure.type = Failure::FILE_BAD;
+    return false;
+}
+
 Config::Failure::Type Config::get_failure()
 {
     return failure.type;
@@ -76,24 +89,27 @@ bool Config::set_status(Status s)
                     file.open(path, ios::out | ios::trunc);
             }
             //check if valid
-            if (!file || !file.is_open())
+            if (!file.is_open())
             {
                 status = READY;
+                failure.type = Failure::FILE_OPEN_FAIL;
                 return false;
             }
-            file.clear(); //reset status flags
+            if (!check_file())
+                return false;
         }
         status = s; //update status flag
+        file.clear(); //reset status flags
     }
     else
     {
         if (status == READY)
             return true;
-        if (!file)
-        {
-            set_status(READY);
-            return false;
-        }
+        if (check_file()) //status is still LOAD or SAVE and file is good
+            return true;
+        //file not ok => close
+        set_status(READY);
+        return false;
     }
     return true;
 }
