@@ -37,6 +37,23 @@ Config::Failure::Type Config::get_failure()
     return failure.type;
 }
 
+void Config::clear()
+{
+    failure.type = Failure::NONE;
+}
+
+bool Config::operator()()
+{
+    if (failure.type == Failure::NONE)
+        return true;
+    return false;
+}
+
+bool Config::operator!()
+{
+    return !(*this)();
+}
+
 bool Config::set_status(Status s)
 {
     if (s != status) //check if 's' is not already set

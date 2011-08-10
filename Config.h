@@ -25,6 +25,10 @@ class Config
         void set_binary(bool b=true); //set save/load mode to binary('true') or formatted('false')
         void change_file(const char* path, bool binary=false); //change current file to load/save to 'path'
         Failure::Type get_failure(); //return type of last failure
+        void clear(); //reset 'failure' to 'Failure::NONE'
+
+        bool operator()(); //return 'true' if no failure accured
+        bool operator!(); //return 'true' if failure accured
 
         template<typename T>
         bool load_save(T& data, bool save=false) //TODO specialize for 'binary==true'
